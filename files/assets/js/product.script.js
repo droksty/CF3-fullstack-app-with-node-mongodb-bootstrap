@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
   $.ajax({
-    url:'http://localhost:3000/api/user/findall',
+    url:'http://localhost:3000/api/product/findAll',
     type:'get',
     dataType:'JSON'
   })
@@ -12,8 +12,9 @@ $(document).ready(function(){
     
     if (status) { 
         createTbody(data);
+        console.log("pass")
     } else {
-        alert(false,'Πρόβλημα στην αναζήτηση των χρηστών ('+ data.message + ')');
+        alert(false,'Πρόβλημα στην αναζήτηση των προϊόντων ('+ data.message + ')');
         // console.log(data);
     }
   });
@@ -73,47 +74,42 @@ $(document).ready(function(){
 
 function createTbody(data){
 
-  $("#userTable > tbody").empty();
+  $("#productTable > tbody").empty();
 
   // console.log("CreateTBody", data);
   const len = data.length;
   for (let i=0; i<len; i++){
-    let username = data[i].username;
-    let name = data[i].name;
-    let surname = data[i].surname;
-    let email = data[i].email;
-    let address = data[i].address.area + ", " + data[i].address.road;
-    let phone = "";
-    for (let x=0; x<data[i].phone.length; x++ ){
-      phone = phone + data[i].phone[x].type + ":" + data[i].phone[x].number + "<br>"
-    }
+    let product = data[i].product;
+    let description = data[i].description;
+    let cost = data[i].cost;
+    let quantity = data[i].quantity;
+    
+    console.log(product)
     
     // console.log(username, name);
 
     let tr_str = "<tr>" +
-      "<td>" + username + "</td>" +
-      "<td>" + name + "</td>" +
-      "<td>" + surname + "</td>" +
-      "<td>" + email + "</td>" +
-      "<td>" + address + "</td>" +
-      "<td>" + phone + "</td>" +      
+      "<td>" + product + "</td>" +
+      "<td>" + description + "</td>" +
+      "<td>" + cost + "</td>" +
+      "<td>" + quantity + "</td>" +
       "<td>" +
-          "<button class='btnUpdate btn btn-primary' value=\'"+username+"\'>Τροποποίηση</button> " +
-          "<button class='btnDelete btn btn-primary' value=\'"+username+"\'>Διαγραφή</button>" +
+          "<button class='btnUpdate btn btn-primary' value=\'"+product+"\'>Τροποποίηση</button> " +
+          "<button class='btnDelete btn btn-primary' value=\'"+product+"\'>Διαγραφή</button>" +
       "</td>" + 
       "</tr>";
 
-    $("#userTable tbody").append(tr_str);
+    $("#productTable tbody").append(tr_str);
   }
 }
 
-function alert(status, message){
-  if (status){
-      $('.alert').addClass('alert-success');
-      $('.alert').removeClass('alert-danger');
-  } else {
-      $('.alert').addClass('alert-danger');
-      $('.alert').removeClass('alert-success');
-  }
-  $('.alert').html(message);
-}
+// function alert(status, message){
+//   if (status){
+//       $('.alert').addClass('alert-success');
+//       $('.alert').removeClass('alert-danger');
+//   } else {
+//       $('.alert').addClass('alert-danger');
+//       $('.alert').removeClass('alert-success');
+//   }
+//   $('.alert').html(message);
+// }
